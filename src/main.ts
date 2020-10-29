@@ -2,7 +2,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-
 type DeploymentState =
   | "error"
   | "failure"
@@ -48,8 +47,6 @@ async function run() {
 
     const deployment = await octokit.graphql(query, variables);
     const activeDeploys = deployment['repository']['deployments']['edges'].filter(a => a['node']['state'] == "ACTIVE");
-
-    console.log(activeDeploys);
 
     core.setOutput("sha", activeDeploys[0]['node']['commit']['oid']);
   } catch (error) {
