@@ -26,6 +26,8 @@ async function run() {
       repo: context.repo.repo,
       environment: environment,
     })
+    
+    deployment.data.forEach(a => core.debug(a.sha));
 
     core.setOutput("sha", deployment.data[0].sha);
   } catch (error) {
