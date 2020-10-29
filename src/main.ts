@@ -47,10 +47,11 @@ async function run() {
     };
 
     const deployment = await octokit.graphql(query, variables);
+    const activeDeploys = deployment['repository']['deployments']['edges'].filter(a => a['node']['state'] == "ACTIVE");
 
-    console.log(deployment);
+    console.log(activeDeploys);
 
-    core.setOutput("sha", "as");
+    core.setOutput("sha", activeDeploys[0]['node']['commit']['oid']);
   } catch (error) {
     core.error(error);
     core.setFailed(error.message);
