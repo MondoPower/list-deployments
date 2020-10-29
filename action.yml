@@ -1,0 +1,20 @@
+name: "Deployment Action"
+description: "Creates a GitHub Deployment"
+author: "chrnorm"
+branding:
+  icon: arrow-up
+  color: black
+inputs:
+  token:
+    description: "Github repository token"
+    required: true
+  environment:
+    description: "The name of the environment for the deployment"
+    default: "production"
+    required: false
+outputs:
+  sha:
+    description: "The ID of the created deployment"
+runs:
+  using: "node12"
+  main: "dist/index.js"
