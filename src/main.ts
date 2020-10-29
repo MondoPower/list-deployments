@@ -19,7 +19,7 @@ async function run() {
     const token = core.getInput("token", { required: true });
     const environment = core.getInput("environment", { required: false }) || "production";
 
-    const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
+    const octokit = github.getOctokit(token);
 
     const query = `
     query($owner: String!, $repo: String!, $environment: String!) {
@@ -44,7 +44,7 @@ async function run() {
       environment: environment
     };
 
-    const deployment = await client.graphql(query, variables);
+    const deployment = await octokit.graphql(query, variables);
 
     console.log(deployment);
 

@@ -560,7 +560,7 @@ function run() {
             const logUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}/checks`;
             const token = core.getInput("token", { required: true });
             const environment = core.getInput("environment", { required: false }) || "production";
-            const client = new github.GitHub(token, { previews: ["flash", "ant-man"] });
+            const octokit = github.getOctokit(token);
             const query = `
     query($owner: String!, $repo: String!, $environment: String!) {
       repository(owner:$owner, name:$repo) {
@@ -582,7 +582,7 @@ function run() {
                 repo: context.repo.repo,
                 environment: environment
             };
-            const deployment = yield client.graphql(query, variables);
+            const deployment = yield octokit.graphql(query, variables);
             console.log(deployment);
             core.setOutput("sha", "as");
         }
