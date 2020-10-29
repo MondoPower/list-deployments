@@ -3216,7 +3216,7 @@ function run() {
                 repo: context.repo.repo,
                 environment: environment,
             });
-            deployment.data.forEach(a => core.debug(a.sha));
+            deployment.data.forEach(a => console.log(a.sha));
             core.setOutput("sha", deployment.data[0].sha);
         }
         catch (error) {
