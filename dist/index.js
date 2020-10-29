@@ -551,8 +551,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const github = __webpack_require__(469);
 const core = __webpack_require__(470);
+const github = __webpack_require__(469);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -562,7 +562,7 @@ function run() {
             const environment = core.getInput("environment", { required: false }) || "production";
             const octokit = github.getOctokit(token);
             const query = `
-    query($owner: String!, $repo: String!, $environment: String!) {
+    query($owner: String!, $repo: String!, $environment: [String!]) {
       repository(owner:$owner, name:$repo) {
         deployments(environments:$environment, first: 50, orderBy: {direction: DESC, field: CREATED_AT}) {
           edges {
@@ -580,7 +580,7 @@ function run() {
             const variables = {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                environment: environment
+                environment: [environment]
             };
             const deployment = yield octokit.graphql(query, variables);
             console.log(deployment);
