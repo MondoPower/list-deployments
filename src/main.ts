@@ -33,6 +33,10 @@ async function run() {
                 oid
               }
               state
+              ref {
+                name
+                prefix
+              }
             }
           }
         }
@@ -49,6 +53,9 @@ async function run() {
     const activeDeploys = deployment['repository']['deployments']['edges'].filter(a => a['node']['state'] == "ACTIVE");
 
     core.setOutput("sha", activeDeploys[0]['node']['commit']['oid']);
+    core.setOutput("refName", activeDeploys[0]['node']['ref']['name'])
+    core.setOutput("refPrefix", activeDeploys[0]['node']['ref']['prefix'])
+
   } catch (error) {
     core.error(error);
     core.setFailed(error.message);

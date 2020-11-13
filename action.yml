@@ -15,6 +15,10 @@ inputs:
 outputs:
   sha:
     description: "The ID of the created deployment"
+  refName:
+    description: "The Ref name that triggered the deployment"
+  refPrefix:
+    description: "The Ref prefix (tags/heads/etc) that triggered the deployment"
 runs:
   using: "node12"
   main: "dist/index.js"
